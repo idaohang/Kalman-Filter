@@ -8,43 +8,36 @@
 #include "Matrix.h"
 #include "Kalman Filter.h"
 
-/*
+
 //State
-double x[] = { 0.2, 0.1 };
-Matrix X_(2, 1, x);	//a priori
+Matrix X_;	//a priori
 Matrix X;	//a posteriori
 
 //Measurement
-double y[] = { 0.5 };
-Matrix Y(1, 1, y);
+Matrix Y;
 
 //model
-double f[] = { 1, 1, 0, 1 };
-Matrix F(2, 2, f);
-Matrix G(2,1);
-double h[] = { 1, 0 };
-Matrix H(1, 2, h);
+Matrix F;
+Matrix H;
 
 //Covarians matrix
-double p[] = { 0.2, 0, 0, 0.4 };
-Matrix P_(2, 2, p);	//a priori
+Matrix P_;	//a priori
 Matrix P;	//a posteriori
 
 //Kalman gain
 Matrix K;
 
+
 //Variance
-double r[] = { 0.2 };
-Matrix R(1, 1, r);	//Measurement noise
-double q[] = { 0, 0, 0, 4 };
-Matrix Q(2, 2, q);	//Process noise
+Matrix R;	//Measurement noise
+Matrix Q;	//Process noise
+
 
 //Other
-double i[] = { 1, 0, 0, 1 };
-Matrix I(2, 2, i);
+Matrix I2x2;
 
 
-
+/*
 
 void compute(double y){
 	Y.setElm(0, 0, y);
@@ -67,3 +60,47 @@ void compute(double y){
 	//cout << P_ << endl;
 }
 */
+
+void setup(){
+	mallocMatrix(&X_, (int)2, (int)1);
+	X_.data[0][0] = 0.2;
+	X_.data[1][0] = 0.1;
+	
+	mallocMatrix(&X, 2, 1);
+	
+	mallocMatrix(&Y, 1, 1);
+	Y.data[0][0] = 0.5;
+	
+	mallocMatrix(&F, 2, 2);
+	F.data[0][0] = 1;
+	F.data[0][1] = 1;
+	F.data[1][0] = 0;
+	F.data[1][1] = 1;
+	
+	mallocMatrix(&H, 1, 2);
+	H.data[0][0] = 1;
+	H.data[0][1] = 1;
+	
+	mallocMatrix(&P_, 2, 2);
+	P_.data[0][0] = 0.2;
+	P_.data[0][1] = 0;
+	P_.data[1][0] = 0;
+	P_.data[1][1] = 0.4;
+	
+	mallocMatrix(&P, 2, 2);
+	
+	mallocMatrix(&R, 1, 1);
+	R.data[0][0] = 0.2;
+	
+	mallocMatrix(&Q, 2, 2);
+	Q.data[0][0] = 0;
+	Q.data[0][1] = 0;
+	Q.data[1][0] = 0;
+	Q.data[1][1] = 4;
+	
+	mallocMatrix(&I2x2, 2, 2);
+	I2x2.data[0][0] = 1;
+	I2x2.data[0][1] = 0;
+	I2x2.data[1][0] = 0;
+	I2x2.data[1][1] = 1;
+}
