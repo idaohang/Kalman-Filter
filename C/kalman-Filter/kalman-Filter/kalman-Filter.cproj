@@ -108,7 +108,19 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Kalman Filter.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Kalman Filter.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Matrix.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Matrix.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

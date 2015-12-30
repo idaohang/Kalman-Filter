@@ -7,129 +7,133 @@
 
 
 #include "Matrix.h"
+#include <stdlib.h>
 
-void mallocMatrix(Matrix& m, uint8_t row, uint8_t col){
-	m.row = row;
-	m.col = col;
+void mallocMatrix(Matrix* m, uint8_t row, uint8_t col){
+	m->row = row;
+	m->col = col;
 	
-	m.data = (double**) malloc(m.row * sizeof(double*));
-	for (uint8_t r = 0; r < m.row; r++){
-		m.data[r] = (double*) malloc(m.col * sizeof(double));
+	m->data = (double**) malloc(m->row * sizeof(double*));
+	for (uint8_t r = 0; r < m->row; r++){
+		m->data[r] = (double*) malloc(m->col * sizeof(double));
 	}
 }
 
-void freeMatrix(Matrix& m){
-	for (uint8_t r = 0; r < m.row; r++){
-		free(m.data[r]);
+void freeMatrix(Matrix* m){
+	for (uint8_t r = 0; r < m->row; r++){
+		free(m->data[r]);
 	}
-	free(m.data);
-	m.data
+	free(m->data);
+	m->row = 0;
+	m->col = 0;
 }
 
-void resizeMatrix(Matrix& m, uint8_t row, uint8_t col){
-	if(m.col != col && m.row != row){
+void resizeMatrix(Matrix* m, uint8_t row, uint8_t col){
+	if(m->col != col && m->row != row){
 		freeMatrix(m);
 		mallocMatrix(m, row, col);
 	}
 }
 
-Matrix copy(Matrix& rhs){
+Matrix copy(Matrix* rhs){
 	Matrix temp;
-	mallocMatrix(temp, rhs.row, rhs.col);
+	mallocMatrix(&temp, rhs->row, rhs->col);
 	for(uint8_t r = 0; r < temp.row; r++){
 		for (uint8_t c = 0; c < temp.col; c++){
-			temp.data[r][c] = rhs.data[r][c];
+			temp.data[r][c] = rhs->data[r][c];
 		}
 	}
 	return temp;
 }
 
-Matrix& adde(Matrix& lhs, Matrix& rhs){
-	if (lhs.row == rhs.row && lhs.col == rhs.col){
-		for (int r = 0; r < lhs.row; r++){
-			for (int c = 0; c < lhs.col; c++){
-				lhs.data[r][c] += rhs.data[r][c];
+Matrix* adde(Matrix* lhs, Matrix* rhs){
+	if (lhs->row == rhs->row && lhs->col == rhs->col){
+		for (uint8_t r = 0; r < lhs->row; r++){
+			for (uint8_t c = 0; c < lhs->col; c++){
+				lhs->data[r][c] += rhs->data[r][c];
 			}
 		}
 	}
 	return lhs;
 }
 
-Matrix& sube(Matrix& lhs, Matrix& rhs){
-	if (lhs.row == rhs.row && lhs.col == rhs.col){
-		for (int r = 0; r < lhs.row; r++){
-			for (int c = 0; c < lhs.col; c++){
-				lhs.data[r][c] -= rhs.data[r][c];
+Matrix* sube(Matrix* lhs, Matrix* rhs){
+	if (lhs->row == rhs->row && lhs->col == rhs->col){
+		for (uint8_t r = 0; r < lhs->row; r++){
+			for (uint8_t c = 0; c < lhs->col; c++){
+				lhs->data[r][c] -= rhs->data[r][c];
 			}
 		}
 	}
 	return lhs;
 }
 
-Matrix add(Matrix& lhs, Matrix& rhs){
+Matrix add(Matrix* lhs, Matrix* rhs){
 	Matrix temp = copy(lhs);
-	return adde(temp, rhs);
+	adde(&temp, rhs);
+	return temp;
 }
 
-Matrix sub(Matrix& lhs, Matrix& rhs){
+Matrix sub(Matrix* lhs, Matrix* rhs){
 	Matrix temp = copy(lhs);
-	return sube(temp, rhs);
+	sube(&temp, rhs);
+	return temp;
 }
 
-Matrix mul(Matrix& lhs, Matrix& rhs){
+Matrix mul(Matrix* lhs, Matrix* rhs){
 	Matrix returnMatrix;
-	if(lhs.col == rhs.row){
-		mallocMatrix(returnMatrix, lhs.row, rhs.col);
-		for (uint8_t i = 0; i < lhs.row; i++){
-			for (uint8_t j = 0; j < rhs.col; j++){
+	if(lhs->col == rhs->row){
+		mallocMatrix(&returnMatrix, lhs->row, rhs->col);
+		for (uint8_t i = 0; i < lhs->row; i++){
+			for (uint8_t j = 0; j < rhs->col; j++){
 				double temp = 0;
-				for (int k = 0; k < lhs.col; k++){
-					temp += lhs.data[i][k] * rhs.data[k][j];
+				for (uint8_t k = 0; k < lhs->col; k++){
+					temp += lhs->data[i][k] * rhs->data[k][j];
 				}
 				returnMatrix.data[i][j] = temp;
 			}
 		}
 	}
 	else{
-		mallocMatrix(returnMatrix, 0, 0);
+		mallocMatrix(&returnMatrix, 0, 0);
 	}
 	return returnMatrix;
 }
 
-Matrix& mule(Matrix& lhs, Matrix& rhs){
-	Matrix temp = lhs;
-	lhs = mul(lhs, rhs);
-	freeMatrix(temp);
+Matrix* mule(Matrix* lhs, Matrix* rhs){
+	Matrix temp = *lhs;
+	*lhs = mul(lhs, rhs);
+	freeMatrix(&temp);
 	return lhs;
 }
 
-Matrix& scale(Matrix& lhs, double rhs){
-	for (uint8_t r = 0; r < lhs.row; r++){
-		for (uint8_t c = 0; c < lhs.col; c++){
-			lhs.data[r][c] *= rhs;
+Matrix* scale(Matrix* lhs, double rhs){
+	for (uint8_t r = 0; r < lhs->row; r++){
+		for (uint8_t c = 0; c < lhs->col; c++){
+			lhs->data[r][c] *= rhs;
 		}
 	}
 	return lhs;
 }
 
-double det(Matrix& m){
-	if (m.col == m.row){
-		return Determinant(m.data, m.row);
+double det(Matrix* m){
+	if (m->col == m->row){
+		return Determinant(m->data, m->row);
 	}
 	return 0;
 }
 
-Matrix T(Matrix& m){
+Matrix T(Matrix* m){
 	Matrix temp;
 	temp.row = 0;
 	temp.col = 0;
-	copy(temp, m);
-	if (temp.row == temp.col){
-		Transpose(temp.data, temp.row);
+	temp = copy(m);
+	if (temp.row == temp.col){ //Square
+		TSquare(temp.data, temp.row);
 	}
 
-	else{
-		Transpose(&temp.data, temp.row, temp.col);
+	else{ //Not square
+		TAny(&temp.data, temp.row, temp.col);
 		//Swap column and row size;
 		uint8_t t = temp.row;
 		temp.row = temp.col;
@@ -139,20 +143,20 @@ Matrix T(Matrix& m){
 	return temp;
 }
 
-Matrix I(Matrix& m){
+Matrix I(Matrix* m){
 	Matrix temp;
-	if (m.col == 1 && m.row == 1){
-		temp = copy(m);
-		temp.data[0][0] = 1.0 / m.data[0][0];
+	if (m->col == 1 && m->row == 1){ //Scalar
+		mallocMatrix(&temp, 1, 1);
+		temp.data[0][0] = 1.0 / m->data[0][0];
 	}
-	else if (m.row == m.col){
-		mallocMatrix(temp, m.row, m.col);
-		CoFactor(m.data, m.row, temp.data);
-		Transpose(temp.data temp.row);
-		scale(temp, det(m));
+	else if (m->row == m->col){ //any NxN matrix
+		mallocMatrix(&temp, m->row, m->col);
+		CoFactor(m->data, m->row, temp.data);
+		TSquare(temp.data, temp.row);
+		scale(&temp, det(m));
 	}
-	else{ /* Not square matrix */
-		mallocMatrix(temp, 0, 0);
+	else{ //Not square matrix
+		mallocMatrix(&temp, 0, 0);
 	}
 	return temp;
 }
@@ -160,15 +164,12 @@ Matrix I(Matrix& m){
 
 //find determinant
 double Determinant(double **a, uint8_t n){
-	if (n == 1){
-		return a[0][0];
-	}
 	uint8_t i, j, j1, j2;
 	double det = 0;
 	double **m = NULL;
 
 	if (n < 1) { /* Error */
-		continue;
+		det = 0;
 	}
 	
 	else if (n == 1) { /* Shouldn't get used */
@@ -182,9 +183,9 @@ double Determinant(double **a, uint8_t n){
 	else {
 		det = 0;
 		for (j1 = 0; j1<n; j1++) {
-			m = (double**) malloc((n-1) * sizeof(double*))
+			m = (double**) malloc((n-1) * sizeof(double*));
 			for (i = 0; i < n - 1; i++){
-				m[i] = (double*) malloc((n - 1) * sizeof(double))
+				m[i] = (double*) malloc((n - 1) * sizeof(double));
 			}
 			for (i = 1; i<n; i++) {
 				j2 = 0;
@@ -264,7 +265,7 @@ void CoFactor(double **a, uint8_t n, double **b){
 
 
 //Transpose of a square matrix, in place
-void Transpose(double **a, uint8_t n){
+void TSquare(double **a, uint8_t n){
 	uint8_t i, j;
 	double tmp;
 
@@ -278,7 +279,7 @@ void Transpose(double **a, uint8_t n){
 }
 
 //Transpose of a none square matrix
-void Transpose(double ***matrix, uint8_t row, uint8_t col){
+void TAny(double ***matrix, uint8_t row, uint8_t col){
 	// dynamically allocate an array
 	double **result;
 	result = (double**) malloc(col * sizeof(double*)); //creates a new array of pointers to int objects
@@ -300,7 +301,7 @@ void Transpose(double ***matrix, uint8_t row, uint8_t col){
 
 	// clean up
 	for (uint8_t i = 0; i < row; i++){
-		delete[] temp[i];
+		free(temp[i]);
 	}
-	delete[] temp;
+	free(temp);
 }
