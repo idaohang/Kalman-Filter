@@ -39,9 +39,12 @@ Allocating common symbols
 Common symbol       size              file
 
 P_                  0x4               Kalman Filter.o
+HT                  0x4               Kalman Filter.o
 K                   0x4               Kalman Filter.o
 Q                   0x4               Kalman Filter.o
+FT                  0x4               Kalman Filter.o
 Y                   0x4               Kalman Filter.o
+temp                0x4               Kalman Filter.o
 __brkval            0x2               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libc.a(malloc.o)
 I2x2                0x4               Kalman Filter.o
 X_                  0x4               Kalman Filter.o
@@ -59,18 +62,19 @@ Discarded input sections
  .text          0x00000000        0x0 Kalman Filter.o
  .data          0x00000000        0x0 Kalman Filter.o
  .bss           0x00000000        0x0 Kalman Filter.o
- .text.setup    0x00000000      0x2aa Kalman Filter.o
- .debug_info    0x00000000      0x328 Kalman Filter.o
- .debug_abbrev  0x00000000       0xe5 Kalman Filter.o
- .debug_loc     0x00000000       0x97 Kalman Filter.o
+ .text.compute  0x00000000      0x1ae Kalman Filter.o
+ .text.setup    0x00000000      0x2da Kalman Filter.o
+ .debug_info    0x00000000      0x7fe Kalman Filter.o
+ .debug_abbrev  0x00000000      0x14b Kalman Filter.o
+ .debug_loc     0x00000000       0xc5 Kalman Filter.o
  .debug_aranges
-                0x00000000       0x20 Kalman Filter.o
- .debug_ranges  0x00000000       0x10 Kalman Filter.o
- .debug_line    0x00000000       0xd2 Kalman Filter.o
- .debug_str     0x00000000      0x1b9 Kalman Filter.o
+                0x00000000       0x28 Kalman Filter.o
+ .debug_ranges  0x00000000       0x18 Kalman Filter.o
+ .debug_line    0x00000000       0xfc Kalman Filter.o
+ .debug_str     0x00000000      0x1e1 Kalman Filter.o
  .comment       0x00000000       0x31 Kalman Filter.o
- .debug_frame   0x00000000       0x58 Kalman Filter.o
- COMMON         0x00000000       0x2c Kalman Filter.o
+ .debug_frame   0x00000000       0x68 Kalman Filter.o
+ COMMON         0x00000000       0x38 Kalman Filter.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
@@ -98,18 +102,20 @@ Discarded input sections
                 0x00000000      0x238 Matrix.o
  .text.TSquare  0x00000000      0x104 Matrix.o
  .text.I        0x00000000       0xd6 Matrix.o
+ .text.Ie       0x00000000       0x52 Matrix.o
  .text.TAny     0x00000000      0x156 Matrix.o
- .text.T        0x00000000       0x52 Matrix.o
- .debug_info    0x00000000      0xbb6 Matrix.o
+ .text.Te       0x00000000       0x2e Matrix.o
+ .text.T        0x00000000       0x36 Matrix.o
+ .debug_info    0x00000000      0xc5f Matrix.o
  .debug_abbrev  0x00000000      0x223 Matrix.o
- .debug_loc     0x00000000     0x1920 Matrix.o
+ .debug_loc     0x00000000     0x1a41 Matrix.o
  .debug_aranges
-                0x00000000       0xa8 Matrix.o
- .debug_ranges  0x00000000      0x178 Matrix.o
- .debug_line    0x00000000      0x484 Matrix.o
+                0x00000000       0xb8 Matrix.o
+ .debug_ranges  0x00000000      0x188 Matrix.o
+ .debug_line    0x00000000      0x4a8 Matrix.o
  .debug_str     0x00000000      0x234 Matrix.o
  .comment       0x00000000       0x31 Matrix.o
- .debug_frame   0x00000000      0x4bc Matrix.o
+ .debug_frame   0x00000000      0x504 Matrix.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(addsf3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(addsf3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr5\libm.a(addsf3.o)

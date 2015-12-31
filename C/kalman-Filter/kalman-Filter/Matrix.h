@@ -34,7 +34,9 @@ Matrix* scale(Matrix* lhs, double rhs); //operator Matrix *= (double)
 
 double det(Matrix* m); //Determinant
 Matrix T(Matrix* m); //Transpose
+Matrix* Te(Matrix* m); //Transpose =
 Matrix I(Matrix* m); //Inverse
+Matrix* Ie(Matrix* m); //Inverse =
 
 
 /*Help functions*/

@@ -125,22 +125,25 @@ double det(Matrix* m){
 
 Matrix T(Matrix* m){
 	Matrix temp;
-	temp.row = 0;
-	temp.col = 0;
 	temp = copy(m);
-	if (temp.row == temp.col){ //Square
-		TSquare(temp.data, temp.row);
+	Te(&temp);
+	return temp;
+}
+
+Matrix* Te(Matrix* m){
+	if (m->row == m->col){ //Square
+		TSquare(m->data, m->row);
 	}
 
 	else{ //Not square
-		TAny(&temp.data, temp.row, temp.col);
+		TAny(&m->data, m->row, m->col);
 		//Swap column and row size;
-		uint8_t t = temp.row;
-		temp.row = temp.col;
-		temp.col = t;
+		uint8_t temp = m->row;
+		m->row = m->col;
+		m->col = temp;
 	}
 
-	return temp;
+	return m;
 }
 
 Matrix I(Matrix* m){
@@ -159,6 +162,13 @@ Matrix I(Matrix* m){
 		mallocMatrix(&temp, 0, 0);
 	}
 	return temp;
+}
+
+Matrix* Ie(Matrix* m){
+	Matrix temp = *m;
+	*m = I(&temp);
+	freeMatrix(&temp);
+	return m;
 }
 
 
