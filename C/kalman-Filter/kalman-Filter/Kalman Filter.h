@@ -9,6 +9,7 @@
 #ifndef KALMAN_FILTER_H_
 #define KALMAN_FILTER_H_
 
+void setup();
 void compute(double y);
 
 

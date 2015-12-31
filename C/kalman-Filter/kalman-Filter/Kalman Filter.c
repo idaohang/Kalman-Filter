@@ -66,7 +66,7 @@ void compute(double y){
 	freeMatrix(&P);
 	temp = mul(&K, &H);
 	P = sub(&I2x2, &temp);
-	mule(&P, &temp);
+	mule(&P, &P_);
 
 	//Project ahead X_ = F*X; P_ = F * P * F.T() + Q;
 	freeMatrix(&X_);

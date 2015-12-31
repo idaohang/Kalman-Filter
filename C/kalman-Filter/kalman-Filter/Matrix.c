@@ -156,7 +156,7 @@ Matrix I(Matrix* m){
 		mallocMatrix(&temp, m->row, m->col);
 		CoFactor(m->data, m->row, temp.data);
 		TSquare(temp.data, temp.row);
-		scale(&temp, det(m));
+		scale(&temp, 1.0/det(m));
 	}
 	else{ //Not square matrix
 		mallocMatrix(&temp, 0, 0);
